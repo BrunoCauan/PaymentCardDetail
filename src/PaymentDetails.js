@@ -24,7 +24,12 @@ class PaymentDetails extends React.Component {
     await this.setState({
       CardUpdate: Card
     });
-    console.log(this.state.CardUpdate);
+  };
+
+  dispopulateForm = async () => {
+    await this.setState({
+      CardUpdate: ""
+    });
   };
 
   render() {
@@ -34,7 +39,11 @@ class PaymentDetails extends React.Component {
         <hr />
         <div className="row">
           <div className="col-md-5">
-            <PaymentCardForm handleRefreshList={this.refreshList} />
+            <PaymentCardForm
+              handleRefreshList={this.refreshList}
+              CardUpdate={this.state.CardUpdate}
+              handleDisPopulateForm={this.dispopulateForm}
+            />
           </div>
           <div className="col-md-7">
             <PaymentCardList

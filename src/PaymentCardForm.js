@@ -4,6 +4,7 @@ import toastr from "toastr";
 
 class PaymentCardForm extends React.Component {
   state = {
+    PmId: 0,
     CardOwnerName: "",
     CardNumber: "",
     ExpirationDate: "",
@@ -11,27 +12,54 @@ class PaymentCardForm extends React.Component {
     nameValid: "",
     numberValid: "",
     dateValid: "",
-    cvvValid: "",
-    Card: ""
+    cvvValid: ""
+  };
+
+  componentWillReceiveProps = async props => {
+    if (props.CardUpdate !== "") {
+      await this.setState({
+        PmId: props.CardUpdate.PmId,
+        CardOwnerName: props.CardUpdate.CardOwnerName,
+        CardNumber: props.CardUpdate.CardNumber,
+        ExpirationDate: props.CardUpdate.ExpirationDate,
+        CVV: props.CardUpdate.CVV,
+        nameValid: "valid",
+        numberValid: "valid",
+        dateValid: "valid",
+        cvvValid: "valid"
+      });
+    }
   };
 
   handleSubmit = async event => {
     event.preventDefault();
     let creditCard = {
+      PmId: this.state.PmId,
       CardOwnerName: this.state.CardOwnerName,
       CardNumber: this.state.CardNumber,
       ExpirationDate: this.state.ExpirationDate,
       CVV: this.state.CVV
     };
 
-    await axios.post("http://localhost:56000/api/PaymentDetail", creditCard);
-    toastr.success("Submited Successfully", "Payment Detail Register");
+    if (creditCard.PmId !== 0) {
+      await axios.put(
+        `http://localhost:56000/api/PaymentDetail/${creditCard.PmId}`,
+        creditCard
+      );
+      toastr.info("Updated Successfully", "Payment Detail Register");
+    } else {
+      await axios.post("http://localhost:56000/api/PaymentDetail", creditCard);
+      toastr.success("Submited Successfully", "Payment Detail Register");
+    }
+
+    this.props.handleDisPopulateForm();
     this.props.handleRefreshList();
     this.resetState();
   };
 
   resetState = () => {
     this.setState({
+      PmId: 0,
       CardOwnerName: "",
       CardNumber: "",
       ExpirationDate: "",

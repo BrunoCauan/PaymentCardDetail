@@ -15,9 +15,10 @@ class PaymentCardForm extends React.Component {
     cvvValid: ""
   };
 
-  componentWillReceiveProps = async props => {
+  static getDerivedStateFromProps = props => {
     if (props.CardUpdate !== "") {
-      await this.setState({
+      props.handleDisPopulateForm();
+      return {
         PmId: props.CardUpdate.PmId,
         CardOwnerName: props.CardUpdate.CardOwnerName,
         CardNumber: props.CardUpdate.CardNumber,
@@ -27,8 +28,10 @@ class PaymentCardForm extends React.Component {
         numberValid: "valid",
         dateValid: "valid",
         cvvValid: "valid"
-      });
+      };
     }
+
+    return null;
   };
 
   handleSubmit = async event => {
@@ -52,7 +55,6 @@ class PaymentCardForm extends React.Component {
       toastr.success("Submited Successfully", "Payment Detail Register");
     }
 
-    this.props.handleDisPopulateForm();
     this.props.handleRefreshList();
     this.resetState();
   };

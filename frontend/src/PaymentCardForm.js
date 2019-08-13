@@ -302,14 +302,25 @@ class PaymentCardForm extends React.Component {
           </div>
         </div>
 
-        <div className="form-group">
-          <button
-            className="btn btn-success btn-lg btn-block"
-            type="submit"
-            disabled={this.formIsValid() ? false : true}
-          >
-            <i className="fas fa-database" /> Submit
-          </button>
+        <div className="form-row">
+          <div className="form-group col-md-7">
+            <button
+              className="btn btn-success btn-lg btn-block"
+              type="submit"
+              disabled={this.formIsValid() ? false : true}
+            >
+              <i className="fas fa-database" /> Submit
+            </button>
+          </div>
+          <div className="form-group col-md-5">
+            <button
+              className="btn btn-info btn-lg btn-block"
+              type="button"
+              onClick={this.resetState}
+            >
+              <i className="fas fa-backspace" /> Clear
+            </button>
+          </div>
         </div>
       </form>
     );

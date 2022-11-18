@@ -7,7 +7,7 @@
     "bootstrap": "^4.3.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.0",
+    "react-scripts": "5.0.1",
     "toastr": "^2.1.4"
   },
   "scripts": {
